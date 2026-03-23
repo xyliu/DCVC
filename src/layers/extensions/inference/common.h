@@ -269,7 +269,9 @@ __forceinline__ __device__ T reciprocal(const T& a)
 }
 
 template <typename T1, typename T2>
-__forceinline__ __device__ bool4 operator>(const T1& a, const T2& b)
+__forceinline__ __device__
+typename std::enable_if<std::is_same<T1, float4>::value || std::is_same<T1, Half4>::value, bool4>::type
+operator>(const T1& a, const T2& b)
 {
     return make_vec4(a.x > b, a.y > b, a.z > b, a.w > b);
 }
